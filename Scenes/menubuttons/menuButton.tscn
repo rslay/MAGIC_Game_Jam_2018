@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Sprites/Fonts/hiruko.tres" type="DynamicFont" id=1]
 
-[node name="menuButton" type="Button"]
+[node name="menuButton" type="Button" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -24,7 +24,7 @@ shortcut = null
 group = null
 flat = true
 align = 1
-_sections_unfolded = [ "Rect" ]
+_sections_unfolded = [ "Rect", "custom_fonts" ]
 
 [node name="Label" type="Label" parent="." index="0"]
 
