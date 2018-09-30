@@ -8,16 +8,23 @@ const MAX_X_VELOCITY = 20
 enum RAILPOS { TOP, MIDDLE, BOTTOM }
 
 const TOP_RAIL_POS = 150
-
+const EDGEOFFSET = 120
 
 # Character animations (switch means switching rails)
 enum ANIM { IDLE, ATTACK, SWITCH }
 
 const UP = Vector2(0, -1)
+const DOWN = Vector2(0, 1)
 
 
-# Acceleration speed
-var accel = 200
+# Vertical distance between rails
+var vRailDist = 150
+
+# Vertical acceleration speed
+var vAccel = 10
+
+# Horizontal acceleration speed
+var xAccel = 300
 
 # The horizontal position the player is at in the track
 var xpos = 0.5
@@ -29,54 +36,44 @@ var velocity = 0
 var distance = 0
 
 # Player's current state, aka animations
-var state = null
+var state = ANIM.IDLE
 
 # Player's current rail (1=top, 2=mid, 3=bot)
-var rail = null
+var rail = 2
 
+# Rail the player is jumping from
+var jumpingFrom = 0
 
 # Changes the character state animation
 func changeState(newState):
 	
 	match newState:
-		IDLE:
-			$AnimationPlayer.play('idle')
-		ATTACK:
-			$AnimationPlayer.play('attack')
-		SWITCH:
-			$AnimationPlayer.play('switch')
+		ANIM.IDLE:
+			$AnimatedSprite.play('idle')
+		ANIM.ATTACK:
+			$AnimatedSprite.play('attack')
+		ANIM.SWITCH:
+			jumpingFrom = rail * vAccel
+			$AnimatedSprite.play('switch')
 	
 	state = newState
 	pass
 
 
-# Switch to a specific rail or move to a rail relative to the character
-func changeRail(direction):
+func changeRail():
+	print(rail)
 	
-	changeState(SWITCH)
-	
-	var _directionType = typeof(direction)
-	
-	if _directionType == 4: # typeof 4 == string
-		# If the character is moving up or down
-		if direction == "UP":
-			rail = max(rail - 1, 1)
-		elif direction == "DOWN":
-			rail = min(rail + 1, 3)
-		else:
-			ERR_PARAMETER_RANGE_ERROR('The character can only move up, down, or to a specific rail (RAILPOS.TOP, etc)')
+#	print("moving down. Y POS:")
+#	print(self.position.y)
+#	print("Rail POS:")
+#	print(rail * vRailDist)
+
+	if self.position.y > rail * vRailDist:
+		self.position.y -= vAccel
+	elif self.position.y < rail * vRailDist:
+		self.position.y += vAccel
 	else:
-		# If the character is moving to a specific rail
-		if direction == RAILPOS.TOP:
-			rail = 1
-		elif direction == RAILPOS.MIDDLE:
-			rail = 2
-		elif direction == RAILPOS.BOTTOM:
-			rail = 3
-		else:
-			ERR_PARAMETER_RANGE_ERROR('The character can only move up, down, or to a specific rail (RAILPOS.TOP, etc)')
+		jumpingFrom = rail * vRailDist
+		changeState(ANIM.IDLE)
 			
-	self.position.y = TOP_RAIL_POS * rail
-	
-	pass
 

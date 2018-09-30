@@ -12,10 +12,11 @@ config_version=3
 
 config/name="MAGIC2018"
 run/main_scene="res://Scenes/Main.tscn"
-config/icon="res://icon.png"
+config/icon="res://Assets/Horse Cart Kick Anim/Horse-Car Kick Animation4.png"
 
 [display]
 
+window/size/resizable=false
 window/handheld/emulate_touchscreen=true
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
