@@ -1,9 +1,11 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Scenes/Characters/Character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Characters/Player.tscn" type="PackedScene" id=1]
 
-[node name="Main" type="Node" index="0"]
+[node name="Main" type="Node"]
 
 [node name="Character" parent="." index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 185.757, 98.1861 )
 
 
