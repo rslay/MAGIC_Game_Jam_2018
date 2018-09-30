@@ -39,7 +39,7 @@ tracks/1/keys = {
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Player" type="KinematicBody2D" index="0"]
+[node name="Player" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 1
@@ -75,7 +75,6 @@ shape = SubResource( 1 )
 
 [node name="Head" type="Sprite" parent="Position2D" index="0"]
 
-position = Vector2( 0, -0.961492 )
 texture = ExtResource( 2 )
 
 [node name="Cart" type="Sprite" parent="Position2D" index="1"]
